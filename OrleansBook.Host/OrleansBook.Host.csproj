@@ -16,6 +16,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Orleans.Persistence.AzureStorage" Version="7.0.0" />
     <PackageReference Include="Microsoft.Orleans.Runtime" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Orleans.Transactions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Orleans.Transactions.AzureStorage" Version="7.0.0" />
     <PackageReference Include="OrleansDashboard" Version="7.0.0" />
   </ItemGroup>
 

@@ -12,6 +12,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Orleans.Runtime" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Orleans.Transactions" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

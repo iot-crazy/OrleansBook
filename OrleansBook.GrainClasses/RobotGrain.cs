@@ -3,6 +3,7 @@ using Orleans;
 using Orleans.BroadcastChannel;
 using Orleans.Concurrency;
 using Orleans.Runtime;
+using Orleans.Transactions.Abstractions;
 using OrleansBook.GrainInterfaces;
 using System.Runtime.CompilerServices;
 
@@ -13,7 +14,8 @@ namespace OrleansBook.GrainClasses;
 [Reentrant]
 public sealed class RobotGrain : Grain, IRobotGrain, IOnBroadcastChannelSubscribed
 {
-    IPersistentState<RobotState> State;
+    // IPersistentState<RobotState> State;
+    ITransactionalState<RobotState> State;
     ILogger<RobotGrain> Logger;
     IBroadcastChannelProvider BroadcastChannel;
     ChannelId ChannelId;
@@ -22,7 +24,9 @@ public sealed class RobotGrain : Grain, IRobotGrain, IOnBroadcastChannelSubscrib
 
 
     public RobotGrain(ILogger<RobotGrain> logger,
-        [PersistentState("robotState", "orleansbookstore")] IPersistentState<RobotState> state)
+        [TransactionalState("robotState", "robotStateStore")] ITransactionalState<RobotState> state
+        )
+    // [PersistentState("robotState", "orleansbookstore")] IPersistentState<RobotState> state)
     {
         Logger = logger;
         State = state;
@@ -31,7 +35,7 @@ public sealed class RobotGrain : Grain, IRobotGrain, IOnBroadcastChannelSubscrib
         GrainKey = Guid.NewGuid().ToString("N");
         ChannelId = ChannelId.Create("robotChannel", GrainKey);
         BroadcastChannelWriter = BroadcastChannel.GetChannelWriter<string>(ChannelId);
-        
+
     }
 
     public async Task AddInstruction(string instruction)
@@ -39,26 +43,43 @@ public sealed class RobotGrain : Grain, IRobotGrain, IOnBroadcastChannelSubscrib
         var key = this.GetPrimaryKeyString();
         Logger.LogWarning($"{key} adding instruction {instruction}");
 
-        State.State.Instructions.Enqueue(instruction);
-        await State.WriteStateAsync();
+        // State.State.Instructions.Enqueue(instruction);
+        // await State.WriteStateAsync();
+
+        await State.PerformUpdate(state => state.Instructions.Enqueue(instruction));
 
         await BroadcastChannelWriter.Publish(instruction);
     }
 
-    public Task<int> GetInstructionCount()
+    public async Task<int> GetInstructionCount()
     {
-        return Task.FromResult(State.State.Instructions.Count);
+        //return Task.FromResult(State.Instructions.Count);
+
+        return await State.PerformRead(state => state.Instructions.Count);
     }
 
     public async Task<string> GetNextInstruction()
     {
-        if (State.State.Instructions.Count == 0)
+        var key = this.GetPrimaryKeyString();
+        string instruction = string.Empty;
+        await State.PerformUpdate(state =>
         {
-            return string.Empty;
-        }
-        var instruction = State.State.Instructions.Dequeue();
-        await State.WriteStateAsync();
+            if (State.PerformRead(state => state.Instructions.Count).Result == 0) return;
+            instruction = State.PerformRead(state => state.Instructions.Dequeue()).Result;
+        });
+
         return instruction;
+
+        /* if (State.Instructions.Count == 0)
+         {
+             return string.Empty;
+         }
+         var instruction = State.State.Instructions.Dequeue();
+         await State.WriteStateAsync();
+         return instruction;*/
+
+
+
     }
 
     public Task OnSubscribed(IBroadcastChannelSubscription streamSubscription)

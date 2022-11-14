@@ -31,8 +31,17 @@ var host = Host.CreateDefaultBuilder()
                           options.ConfigureTableServiceClient("UseDevelopmentStorage=true");
                       }
                       );
-                silo.AddBroadcastChannel("robotChannel",
-                    options => options.FireAndForgetDelivery = false);
+               // silo.AddBroadcastChannel("robotChannel",
+                //    options => options.FireAndForgetDelivery = false);
+
+                silo.AddBroadcastChannel("robotChannel", ob => ob.Configure(options => options.FireAndForgetDelivery = false));
+
+                silo.AddAzureTableTransactionalStateStorage(
+                    "TransactionStore", opt =>
+                    {
+                        opt.ConfigureTableServiceClient("UseDevelopmentStorage=true");
+                    }
+                   ).UseTransactions();
 
 
             })

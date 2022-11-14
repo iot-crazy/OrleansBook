@@ -1,0 +1,20 @@
+﻿using Orleans;
+using Orleans.Concurrency;
+using OrleansBook.GrainInterfaces;
+
+namespace OrleansBook.GrainClasses;
+
+[StatelessWorker]
+public class BatchGrain : Grain, IBatchGrain
+{
+    public Task AddInstructions((string, string)[] values)
+    {
+        var tasks = values.Select(keyValue =>
+        GrainFactory.GetGrain<IRobotGrain>(keyValue.Item1)
+        .AddInstruction(keyValue.Item2)
+        );
+
+        return Task.WhenAll(tasks);
+
+    }
+}
