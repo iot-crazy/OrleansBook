@@ -12,6 +12,9 @@ var host = Host.CreateDefaultBuilder()
                 .UseOrleansClient((ctx, client) =>
                 {
                     client.UseLocalhostClustering();
+                    client.AddBroadcastChannel("robotChannel",
+                    options => options.FireAndForgetDelivery = false);
+
 
                     // client.UseStaticClustering(new IPEndPoint(IPAddress.Loopback, 30000));
 
@@ -26,6 +29,7 @@ var host = Host.CreateDefaultBuilder()
 host.Start();
 
 var clusterClient = host.Services.GetRequiredService<IClusterClient>();
+
 
 while (true)
 {

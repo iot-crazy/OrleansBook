@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBook.GrainInterfaces", "OrleansBook.GrainInterfaces\OrleansBook.GrainInterfaces.csproj", "{2BE783E3-756D-4B82-A2C7-86A84A1F07DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansBook.GrainInterfaces", "OrleansBook.GrainInterfaces\OrleansBook.GrainInterfaces.csproj", "{2BE783E3-756D-4B82-A2C7-86A84A1F07DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBook.GrainClasses", "OrleansBook.GrainClasses\OrleansBook.GrainClasses.csproj", "{97F36460-065F-4676-A26A-0EC4F8D97514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansBook.GrainClasses", "OrleansBook.GrainClasses\OrleansBook.GrainClasses.csproj", "{97F36460-065F-4676-A26A-0EC4F8D97514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBook.Host", "OrleansBook.Host\OrleansBook.Host.csproj", "{34B57797-A8D2-4C48-9919-CBAFCA5F6783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansBook.Host", "OrleansBook.Host\OrleansBook.Host.csproj", "{34B57797-A8D2-4C48-9919-CBAFCA5F6783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBook.Client", "OrleansBook.Client\OrleansBook.Client.csproj", "{A12F6BAC-DCF7-43EA-8A73-02C2EA20991E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansBook.Client", "OrleansBook.Client\OrleansBook.Client.csproj", "{A12F6BAC-DCF7-43EA-8A73-02C2EA20991E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBook.WebApi", "OrleansBook.WebApi\OrleansBook.WebApi.csproj", "{8F073C90-C4CB-44ED-8FBD-7538427FA0C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A12F6BAC-DCF7-43EA-8A73-02C2EA20991E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A12F6BAC-DCF7-43EA-8A73-02C2EA20991E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A12F6BAC-DCF7-43EA-8A73-02C2EA20991E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F073C90-C4CB-44ED-8FBD-7538427FA0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F073C90-C4CB-44ED-8FBD-7538427FA0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F073C90-C4CB-44ED-8FBD-7538427FA0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F073C90-C4CB-44ED-8FBD-7538427FA0C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

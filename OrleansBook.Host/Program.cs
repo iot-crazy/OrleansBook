@@ -22,10 +22,18 @@ var host = Host.CreateDefaultBuilder()
                      logger.SetMinimumLevel(LogLevel.Warning);
                  });
 
-                silo.Services.AddSingletonNamedService("robot-StateStore", (sp, name) =>
-                {
-                    return new 
-                })
+                silo.AddAzureTableGrainStorage(
+                      name: "orleansbookstore",
+
+                      configureOptions: options =>
+                      {
+                          options.TableName = "RobotGrains";
+                          options.ConfigureTableServiceClient("UseDevelopmentStorage=true");
+                      }
+                      );
+                silo.AddBroadcastChannel("robotChannel",
+                    options => options.FireAndForgetDelivery = false);
+
 
             })
             .Build();
